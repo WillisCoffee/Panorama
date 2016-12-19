@@ -51,6 +51,7 @@ import static pckValidation.Validation.validerNom;
 import static pckValidation.Validation.validerNombre;
 import static pckValidation.Validation.validerNumDepartement;
 
+//TEST
 public class FrmPanorama extends javax.swing.JFrame 
 {
     // <editor-fold defaultstate="collapsed" desc="Variables">
