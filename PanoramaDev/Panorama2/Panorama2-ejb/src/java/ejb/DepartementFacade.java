@@ -1,0 +1,101 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ejb;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import pckEntites.Departement;
+
+/**
+ *
+ * @author clocal
+ */
+@Stateless
+public class DepartementFacade extends AbstractFacade<Departement> implements DepartementFacadeLocal, ejb.DepartementFacadeRemote {
+
+    @PersistenceContext(unitName = "Panorama2-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public DepartementFacade() {
+        super(Departement.class);
+    }
+
+    @Override
+    public Departement findByIdDepartementPK(Departement id) 
+    {
+        TypedQuery<Departement> req = em.createNamedQuery("Departement.findByIdDepartementPK", Departement.class);
+        req.setParameter("idDepartementPK",id.getIdDepartementPK());
+        try
+        {
+            Departement d= req.getSingleResult();
+            return req.getSingleResult();
+        }
+        catch(Exception x)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public Departement findByNumeroNom(String numero, String nom) 
+    {
+        TypedQuery<Departement> req = em.createNamedQuery("Departement.findByNumeroNom",Departement.class);
+        req.setParameter("numeroDep",numero);
+        req.setParameter("nomDep",nom);
+        try
+        {
+            Departement d= req.getSingleResult();
+            return req.getSingleResult();
+        }
+        catch(Exception x)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public Departement findByNumero(String numero) 
+    {
+        TypedQuery<Departement> req = em.createNamedQuery("Departement.findByNumeroDep",Departement.class);
+        req.setParameter("numeroDep",numero);
+        try
+        {
+            Departement d= req.getSingleResult();
+            return req.getSingleResult();
+        }
+        catch(Exception x)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public Departement findByNom(String nom) 
+    {
+        TypedQuery<Departement> req = em.createNamedQuery("Departement.findByNomDep",Departement.class);
+        req.setParameter("nomDep",nom);
+        try
+        {
+            Departement d= req.getSingleResult();
+            return req.getSingleResult();
+        }
+        catch(Exception x)
+        {
+            return null;
+        }
+    }
+    
+
+   
+    
+}

@@ -1,0 +1,436 @@
+package pckDialog;
+
+//Fenêtre permettant la gestion d'étudiant dans un groupe
+
+import ejb.EtudiantFacadeRemote;
+import ejb.ListeEtudiantFacadeRemote;
+import java.util.ArrayList;
+import java.util.List;
+import org.jdesktop.beansbinding.Binding;
+import org.jdesktop.observablecollections.ObservableCollections;
+import panorama.EtudiantTempo;
+import pckEntites.Groupe;
+import pckEntites.ListeEtudiant;
+import pckFournisseur.FournisseurServices;
+
+public class DlgGererGroupe extends javax.swing.JDialog 
+{
+    //<editor-fold defaultstate="collapsed" desc="Variables">
+    boolean result = false;
+    Groupe unGroupe;
+    
+    EtudiantFacadeRemote facadeEtudiant;
+    //Facade pour la liste d'étudiants
+    ListeEtudiantFacadeRemote facadeListeEtudiant;
+    //Liste d'étudiant du groupe
+    List<ListeEtudiant> lstListeEtudiant;
+    //Liste d'étudiant du groupe temporaire pour l'affichage
+    List<EtudiantTempo> lstEtudiantTempo;
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructeurs">
+    public DlgGererGroupe(java.awt.Frame parent, boolean modal, Groupe leGroupe,
+                                                        EtudiantFacadeRemote fe,
+                                                        FournisseurServices fs)
+    {
+        super(parent, modal);
+        unGroupe = leGroupe;
+        facadeEtudiant = fe;
+        facadeListeEtudiant = fs.obtenirListeEtudiantFacade();
+        lstListeEtudiant = facadeListeEtudiant.getListeEtudiant(leGroupe);
+  
+        initialiserChamps();
+        
+        initComponents();
+
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="getter / setter">
+
+    public List<EtudiantTempo> getLstEtudiantTempo() {
+        return lstEtudiantTempo;
+    }
+
+    public void setLstEtudiantTempo(List<EtudiantTempo> lstEtudiantTempo) {
+        this.lstEtudiantTempo = lstEtudiantTempo;
+    }
+
+    public List<ListeEtudiant> getLstListeEtudiant() {
+        return lstListeEtudiant;
+    }
+
+    public void setLstListeEtudiant(List<ListeEtudiant> lstListeEtudiant) {
+        this.lstListeEtudiant = lstListeEtudiant;
+    }
+    
+    
+    
+    //</editor-fold>
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
+        pnlTitre = new javax.swing.JPanel();
+        lblTitre = new javax.swing.JLabel();
+        pnlContenu = new javax.swing.JPanel();
+        btnAjouterGroupe = new javax.swing.JButton();
+        txfMatricule = new javax.swing.JTextField();
+        lblMatricule = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEtudiantGroupe = new javax.swing.JTable();
+        txfPrenom = new javax.swing.JTextField();
+        lblNom = new javax.swing.JLabel();
+        lblPrenom = new javax.swing.JLabel();
+        txfNom = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblEtudiantRecherche = new javax.swing.JTable();
+        btnAjouter = new javax.swing.JButton();
+        pnlBas = new javax.swing.JPanel();
+        pnlMessage = new javax.swing.JPanel();
+        lblMessage = new javax.swing.JLabel();
+        pnlBoutons = new javax.swing.JPanel();
+        btnAccepter = new javax.swing.JButton();
+        btnImprimer = new javax.swing.JButton();
+        btnSupprimerEtudiantGroupe = new javax.swing.JButton();
+        btnAnnuler = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gestion d'un groupe");
+
+        lblTitre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lblTitre.setText("Gérer groupe");
+        pnlTitre.add(lblTitre);
+
+        getContentPane().add(pnlTitre, java.awt.BorderLayout.PAGE_START);
+
+        pnlContenu.setPreferredSize(new java.awt.Dimension(500, 300));
+
+        btnAjouterGroupe.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAjouterGroupe.setText("Rechercher");
+        btnAjouterGroupe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjouterGroupeActionPerformed(evt);
+            }
+        });
+
+        txfMatricule.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+
+        lblMatricule.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        lblMatricule.setText("Matricule :");
+
+        tblEtudiantGroupe.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        tblEtudiantGroupe.setPreferredSize(new java.awt.Dimension(300, 0));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${lstEtudiantTempo}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblEtudiantGroupe, "listeEtudiant");
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codePermanent_}"));
+        columnBinding.setColumnName("Code Permanent");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${matricule_}"));
+        columnBinding.setColumnName("Matricule");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nom_}"));
+        columnBinding.setColumnName("Nom");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${prenom_}"));
+        columnBinding.setColumnName("Prenom");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(tblEtudiantGroupe);
+        if (tblEtudiantGroupe.getColumnModel().getColumnCount() > 0) {
+            tblEtudiantGroupe.getColumnModel().getColumn(0).setPreferredWidth(50);
+        }
+
+        txfPrenom.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+
+        lblNom.setText("Nom :");
+
+        lblPrenom.setText("Prénom :");
+
+        txfNom.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+
+        tblEtudiantRecherche.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        tblEtudiantRecherche.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Matricule", "Nom", "Prénom"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEtudiantRecherche.setPreferredSize(new java.awt.Dimension(300, 0));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${lstListeEtudiant}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblEtudiantRecherche);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${heuresAbsences}"));
+        columnBinding.setColumnName("Heures Absences");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idGroupeFK}"));
+        columnBinding.setColumnName("Id Groupe FK");
+        columnBinding.setColumnClass(pckEntites.Groupe.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idListePK}"));
+        columnBinding.setColumnName("Id Liste PK");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${matriculeFK}"));
+        columnBinding.setColumnName("Matricule FK");
+        columnBinding.setColumnClass(pckEntites.Etudiant.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane2.setViewportView(tblEtudiantRecherche);
+        if (tblEtudiantRecherche.getColumnModel().getColumnCount() > 0) {
+            tblEtudiantRecherche.getColumnModel().getColumn(0).setPreferredWidth(50);
+        }
+
+        btnAjouter.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAjouter.setText("Ajouter");
+        btnAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjouterActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContenuLayout = new javax.swing.GroupLayout(pnlContenu);
+        pnlContenu.setLayout(pnlContenuLayout);
+        pnlContenuLayout.setHorizontalGroup(
+            pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                    .addGroup(pnlContenuLayout.createSequentialGroup()
+                        .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAjouterGroupe)
+                            .addGroup(pnlContenuLayout.createSequentialGroup()
+                                .addComponent(lblNom)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfNom, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlContenuLayout.createSequentialGroup()
+                                    .addComponent(lblMatricule)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txfMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlContenuLayout.createSequentialGroup()
+                                    .addComponent(lblPrenom)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txfPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(pnlContenuLayout.createSequentialGroup()
+                                .addComponent(btnAjouter)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        pnlContenuLayout.setVerticalGroup(
+            pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenuLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlContenuLayout.createSequentialGroup()
+                        .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMatricule)
+                            .addComponent(txfMatricule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNom)
+                            .addComponent(txfNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPrenom)
+                            .addComponent(txfPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAjouterGroupe)
+                    .addComponent(btnAjouter))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(pnlContenu, java.awt.BorderLayout.CENTER);
+
+        pnlBas.setPreferredSize(new java.awt.Dimension(0, 59));
+        pnlBas.setLayout(new java.awt.BorderLayout());
+
+        lblMessage.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        lblMessage.setText("Le matricule saisie n'existe pas");
+        pnlMessage.add(lblMessage);
+
+        pnlBas.add(pnlMessage, java.awt.BorderLayout.PAGE_START);
+
+        btnAccepter.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAccepter.setText("Accepter");
+        btnAccepter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccepterActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnAccepter);
+
+        btnImprimer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnImprimer.setText("Imprimer");
+        btnImprimer.setMaximumSize(new java.awt.Dimension(81, 23));
+        btnImprimer.setMinimumSize(new java.awt.Dimension(81, 23));
+        btnImprimer.setPreferredSize(new java.awt.Dimension(90, 23));
+        btnImprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimerActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnImprimer);
+
+        btnSupprimerEtudiantGroupe.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnSupprimerEtudiantGroupe.setText("Supprimer");
+        btnSupprimerEtudiantGroupe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupprimerEtudiantGroupeActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnSupprimerEtudiantGroupe);
+
+        btnAnnuler.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAnnuler.setText("Annuler");
+        btnAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnnulerActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnAnnuler);
+
+        pnlBas.add(pnlBoutons, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(pnlBas, java.awt.BorderLayout.PAGE_END);
+
+        bindingGroup.bind();
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    //<editor-fold defaultstate="collapsed" desc="Actions">
+    private void btnSupprimerEtudiantGroupeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprimerEtudiantGroupeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSupprimerEtudiantGroupeActionPerformed
+
+    private void btnAjouterGroupeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterGroupeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAjouterGroupeActionPerformed
+
+    private void btnAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAjouterActionPerformed
+
+    private void btnAccepterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccepterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAccepterActionPerformed
+
+    private void btnImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImprimerActionPerformed
+
+    private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnnulerActionPerformed
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Opérations">
+    private void initialiserChamps()
+    {
+        lstEtudiantTempo = ObservableCollections.observableList(new ArrayList<EtudiantTempo>());
+        
+        for (ListeEtudiant unEtudiant : lstListeEtudiant)
+        {
+            EtudiantTempo unEtudiantTempo = new EtudiantTempo(unEtudiant.getMatriculeFK().getIdUtilisateurFK().getNom()
+                                                             ,unEtudiant.getMatriculeFK().getIdUtilisateurFK().getPrenom()
+                                                             ,unEtudiant.getMatriculeFK().getMatriculePK()
+                                                             ,unEtudiant.getMatriculeFK().getCodePermanent());
+            lstEtudiantTempo.add(unEtudiantTempo);  
+        } 
+//        Binding bindListeEtudiant = bindingGroup.getBinding("listeEtudiant");
+//        bindListeEtudiant.unbind();
+//        bindListeEtudiant.bind();
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Main">
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DlgGererGroupe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DlgGererGroupe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DlgGererGroupe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DlgGererGroupe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgGererGroupe dialog = new DlgGererGroupe(new javax.swing.JFrame(), true, null, null, null);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Composants">
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAccepter;
+    private javax.swing.JButton btnAjouter;
+    private javax.swing.JButton btnAjouterGroupe;
+    private javax.swing.JButton btnAnnuler;
+    private javax.swing.JButton btnImprimer;
+    private javax.swing.JButton btnSupprimerEtudiantGroupe;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblMatricule;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JLabel lblNom;
+    private javax.swing.JLabel lblPrenom;
+    private javax.swing.JLabel lblTitre;
+    private javax.swing.JPanel pnlBas;
+    private javax.swing.JPanel pnlBoutons;
+    private javax.swing.JPanel pnlContenu;
+    private javax.swing.JPanel pnlMessage;
+    private javax.swing.JPanel pnlTitre;
+    private javax.swing.JTable tblEtudiantGroupe;
+    private javax.swing.JTable tblEtudiantRecherche;
+    private javax.swing.JTextField txfMatricule;
+    private javax.swing.JTextField txfNom;
+    private javax.swing.JTextField txfPrenom;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
+    // End of variables declaration//GEN-END:variables
+//</editor-fold>
+}

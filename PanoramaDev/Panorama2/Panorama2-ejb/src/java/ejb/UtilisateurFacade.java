@@ -1,0 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ejb;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import pckEntites.Utilisateur;
+
+/**
+ *
+ * @author clocal
+ */
+@Stateless
+public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements UtilisateurFacadeLocal, ejb.UtilisateurFacadeRemote {
+
+    @PersistenceContext(unitName = "Panorama2-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public UtilisateurFacade() {
+        super(Utilisateur.class);
+    }
+
+    @Override
+    public Utilisateur findByIdUtilisateurPK(Utilisateur id)
+    {
+      TypedQuery<Utilisateur> req = em.createNamedQuery("Utilisateur.findByIdUtilisateurPK", Utilisateur.class);
+      req.setParameter("idUtilisateurPK",id.getIdUtilisateurPK());
+      return req.getSingleResult();
+    }
+
+    @Override
+    public Utilisateur findByNas(int nas) {
+       TypedQuery<Utilisateur> req = em.createNamedQuery("Utilisateur.findByNas", Utilisateur.class);
+       req.setParameter("nas", nas);
+       return req.getSingleResult();
+    }
+    
+}

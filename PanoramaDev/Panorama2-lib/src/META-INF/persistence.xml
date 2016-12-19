@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Panorama2-libPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>pckEntites.Locaux</class>
+    <class>pckEntites.Communique</class>
+    <class>pckEntites.Destinataire</class>
+    <class>pckEntites.Utilisateur</class>
+    <class>pckEntites.Session</class>
+    <class>pckEntites.Etudiant</class>
+    <class>pckEntites.PersonnelSoutien</class>
+    <class>pckEntites.CodePostal</class>
+    <class>pckEntites.ReserverLocaux</class>
+    <class>pckEntites.CoursAnnule</class>
+    <class>pckEntites.ListeEtudiant</class>
+    <class>pckEntites.Cegep</class>
+    <class>pckEntites.Evaluation</class>
+    <class>pckEntites.Groupe</class>
+    <class>pckEntites.Message</class>
+    <class>pckEntites.PieceJointe</class>
+    <class>pckEntites.Cours</class>
+    <class>pckEntites.Document</class>
+    <class>pckEntites.Departement</class>
+    <class>pckEntites.Note</class>
+    <class>pckEntites.Professeur</class>
+    <class>pckEntites.PlageHoraire</class>
+    <class>pckEntites.Adresse</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://depinfo5.cegep-rimouski.qc.ca:3306/equipe05?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="equipe05"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="3qu1p305"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-24T14:38:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listeEtudiant" columnCount="3" pageWidth="612" pageHeight="792" columnWidth="180" columnSpacing="10" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ff03c82-b03e-45b0-8551-082de46674ef">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Horizon"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="Groupe" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT equipe05.`Cegep`.`nomCegep`,
+	equipe05.`Cegep`.`logoCegep`,
+	equipe05.`Etudiant`.`matricule_PK`,
+	equipe05.`Utilisateur`.nom,
+	equipe05.`Utilisateur`.prenom,
+	equipe05.`Utilisateur`.photographie,
+	equipe05.`Groupe`.`idGroupe_PK`,
+	equipe05.`ListeEtudiant`.`idListe_PK`
+FROM equipe05.`Cegep`,
+	equipe05.`ListeEtudiant`
+	INNER JOIN equipe05.`Etudiant` ON 
+	 equipe05.`ListeEtudiant`.`matricule_FK` = equipe05.`Etudiant`.`matricule_PK` 
+	INNER JOIN equipe05.`Utilisateur` ON 
+	 equipe05.`Etudiant`.`idUtilisateur_FK` = equipe05.`Utilisateur`.`idUtilisateur_PK` 
+	INNER JOIN equipe05.`Groupe` ON 
+	 equipe05.`ListeEtudiant`.`idGroupe_FK` = equipe05.`Groupe`.`idGroupe_PK` 
+WHERE 
+	 equipe05.`Groupe`.`idGroupe_PK` = $P{Groupe} 
+GROUP BY equipe05.`ListeEtudiant`.`idListe_PK`]]>
+	</queryString>
+	<field name="nomCegep" class="java.lang.String"/>
+	<field name="logoCegep" class="java.lang.Object"/>
+	<field name="matricule_PK" class="java.lang.String"/>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="photographie" class="java.io.InputStream"/>
+	<field name="idGroupe_PK" class="java.lang.Integer"/>
+	<field name="idListe_PK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="410" y="1" width="100" height="30" uuid="1faac3ce-4654-4e21-a39e-9c09af2218c1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="510" y="1" width="40" height="30" uuid="e4db3a82-6a59-4ded-872f-5ed22ec08544"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="18" width="571" height="1" backcolor="#000000" uuid="e059f29e-e462-46a9-92f3-5aec655a4c7c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="21" y="0" width="149" height="30" uuid="41954ee0-995d-44c7-a84d-5656593f3731"/>
+				<textFieldExpression><![CDATA[$F{nomCegep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<textField>
+				<reportElement x="302" y="32" width="44" height="20" uuid="76f41190-c512-44af-a2cf-1d07a7e61053"/>
+				<textElement>
+					<font fontName="Verdana" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idGroupe_PK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="231" y="32" width="70" height="18" uuid="82661866-985a-4f52-ad52-118e4ee0a32e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="14"/>
+				</textElement>
+				<text><![CDATA[Groupe : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-20" y="3" width="612" height="27" uuid="87f56067-d786-49bb-8fec-0a38b9124eef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liste des étudiants]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="7" width="100" height="23" forecolor="#FFFFFF" uuid="8b930d95-007c-4376-bfbf-fc944ba18595"/>
+				<textFieldExpression><![CDATA[$P{Groupe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="93" splitType="Stretch">
+			<textField>
+				<reportElement x="95" y="4" width="95" height="15" uuid="1af66c69-075e-48e7-8a94-c7f012651f6d"/>
+				<textElement>
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="19" width="95" height="14" uuid="bbe1a587-c512-4524-b453-90fb0d3d0b11"/>
+				<textElement>
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="64" width="85" height="18" uuid="77d841ff-c234-4000-b9c6-06f1a25268ae"/>
+				<textElement>
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricule_PK}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealHeight" hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
+				<reportElement x="21" y="0" width="68" height="74" uuid="dbea7f43-c4e4-4c87-b2e8-36a27f48d4ba"/>
+				<imageExpression><![CDATA[$F{photographie}]]></imageExpression>
+			</image>
+		</band>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

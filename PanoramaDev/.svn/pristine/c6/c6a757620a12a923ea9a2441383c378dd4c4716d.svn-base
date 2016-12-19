@@ -1,0 +1,124 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package panorama;
+
+import java.awt.BasicStroke;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+
+/**
+ *
+ * @author Kathy
+ */
+public class ImpressionHoraire implements Printable{
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException
+    {
+        int ret = NO_SUCH_PAGE; //Veillez à vous assurer que cette valeur est retournée lorsque le PrinterJob
+                                //demande d'imprimer une page qui est passée la fin du document
+        
+        if (pageIndex == 0) //S'assurer qu'on nous a bien demandé d'imprimer la première page du document
+        {
+            //L'instance de Graphics reçue en paramètre est en fait une instance de Graphics2D
+            //Comme cette classe offre plus de possibilités, on transtype le paramètre en Graphics2D
+            Graphics2D g = (Graphics2D) graphics;
+            
+            //Déterminer le point central de la page
+            int departX = (int) (pageFormat.getWidth() / 8.0);
+            int departY = (int) (pageFormat.getHeight() / 22.0);
+            
+            //Changer la police utilisée pour imprimer le texte
+            g.setFont(new Font("Verdana", Font.BOLD, 10));
+            
+            //Imprimer le texte
+            g.drawString("Lundi", departX*2, departY*5 + 22);
+            g.drawString("Mardi", departX*3, departY*5 + 22);
+            g.drawString("Mercredi", departX*4, departY*5 + 22);
+            g.drawString("Jeudi", departX*5, departY*5 + 22);
+            g.drawString("Vendredi", departX*6 + 9, departY*5 + 22);
+            
+            
+            //Heures
+            g.drawString("8:15", departX + 12, departY*6 + 12);
+            g.drawString("9:05", departX + 12, departY*6 + 33);           
+            g.drawString("9:10", departX + 12, departY*7 + 12);
+            g.drawString("10:00", departX + 7, departY*7 + 33);           
+            g.drawString("10:10", departX + 7, departY*8 + 12);
+            g.drawString("11:00", departX + 7, departY*8 + 33);            
+            g.drawString("11:05", departX + 7, departY*9 + 12);
+            g.drawString("11:55", departX + 7, departY*9 + 33);           
+            g.drawString("12:00", departX + 7, departY*10 + 12);
+            g.drawString("12:50", departX + 7, departY*10 + 33);            
+            g.drawString("13:00", departX + 7, departY*11 + 12);
+            g.drawString("13:50", departX + 7, departY*11 + 33);            
+            g.drawString("14:00", departX + 7, departY*12 + 12);
+            g.drawString("14:50", departX + 7, departY*12 + 33);           
+            g.drawString("15:00", departX + 7, departY*13 + 12);
+            g.drawString("15:50", departX + 7, departY*13 + 33);            
+            g.drawString("16:00", departX + 7, departY*14 + 12);
+            g.drawString("16:50", departX + 7, departY*14 + 33);           
+            g.drawString("17:00", departX + 7, departY*15 + 12);
+            g.drawString("17:50", departX + 7, departY*15 + 33);            
+            g.drawString("18:00", departX + 7, departY*16 + 12);
+            g.drawString("18:50", departX + 7, departY*16 + 33);            
+            g.drawString("19:00", departX + 7, departY*17 + 12);
+            g.drawString("19:50", departX + 7, departY*17 + 33);            
+            g.drawString("20:00", departX + 7, departY*18 + 12);
+            g.drawString("20:50", departX + 7, departY*18 + 33);            
+            g.drawString("21:00", departX + 7, departY*19 + 12);
+            g.drawString("21:50", departX + 7, departY*19 + 33);           
+            g.drawString("22:00", departX + 7, departY*20 + 12);
+            g.drawString("22:50", departX + 7, departY*20 + 33);
+            
+            
+            //Changer la largeur du trait à 5 (Pixels? Points? mm?)
+            //Avis aux intéressé(e)s, la classe BasicStroke permet aussi de réaliser
+            //des lignes pointillées, voir les détails dans la javadoc!
+            g.setStroke(new BasicStroke(1));
+            
+            g.drawLine(departX, departY + 10, departX*7, departY + 10);
+            
+            //Dessiner un tableau
+            int i = 0;
+            for (i=0; i < 17; i++)
+            {
+                g.drawLine(departX, departY*5 + departY*i, departX*7, departY*5 + departY*i);
+            }
+            
+            
+            //Lignes des colonnes
+            g.drawLine(departX, departY*5, departX, departY*21);
+            g.drawLine(departX + departX/2 + 10, departY*5, departX + departX/2 + 10, departY*21);
+            
+            g.drawLine(departX + departX*1 + departX/2 + 15, departY*5, departX + departX*1 + departX/2 + 15, departY*21);
+            g.drawLine(departX + departX*2 + departX/2 + 20, departY*5, departX + departX*2 + departX/2 + 20, departY*21);
+            g.drawLine(departX + departX*3 + departX/2 + 25, departY*5, departX + departX*3 + departX/2 + 25, departY*21);
+            g.drawLine(departX + departX*4 + departX/2 + 30, departY*5, departX + departX*4 + departX/2 + 30, departY*21);   
+            
+            g.drawLine(departX + departX*6, departY*5, departX + departX*6, departY*21);
+            
+            //Puisqu'on n'a pas changé la largeur du trait, la forme suivante sera
+            //aussi dessinée avec un trait de 5. Pour changer cet état de fait,
+            //on doit, avant d'appeler drawOval(), redonne une largeur de trait 
+            //différente
+            //g.drawOval(centreX - 20, centreY - 38, 65, 65);
+            
+            ret = PAGE_EXISTS;
+        }
+
+        return ret;
+
+
+    }
+    
+}

@@ -1,0 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckFournisseur;
+
+import ejb.AdresseFacadeRemote;
+import ejb.CegepFacadeRemote;
+import ejb.CodePostalFacadeRemote;
+import ejb.CoursAnnuleFacadeRemote;
+import ejb.CoursFacadeRemote;
+import ejb.DepartementFacadeRemote;
+import ejb.EtudiantFacadeRemote;
+import ejb.GroupeFacadeRemote;
+import ejb.ListeEtudiantFacadeRemote;
+import ejb.LocauxFacadeRemote;
+import ejb.PersonnelSoutienFacadeRemote;
+import ejb.PlageHoraireFacadeRemote;
+import ejb.ProfesseurFacadeRemote;
+import ejb.SessionFacadeRemote;
+import ejb.UtilisateurFacadeRemote;
+
+/**
+ *
+ * @author clocal
+ */
+public interface FournisseurServices 
+{
+UtilisateurFacadeRemote obtenirFacadeUtilisateur();
+EtudiantFacadeRemote obtenirFacadeEtudiant();
+ProfesseurFacadeRemote obtenirFacadeEnseignant();
+PersonnelSoutienFacadeRemote obtenirFacadePersonnelSoutien();
+CoursFacadeRemote obtenirFacadeCours();
+SessionFacadeRemote obtenirFacadeSession();
+DepartementFacadeRemote obtenirFacadeDepartement();
+LocauxFacadeRemote obtenirFacadeLocaux();
+GroupeFacadeRemote obtenirFacadeGroupe();
+CegepFacadeRemote obtenirFacadeCegep();
+AdresseFacadeRemote obtenirFacadeAdresse();
+CodePostalFacadeRemote obtenirFacadeCodePostal();
+ListeEtudiantFacadeRemote obtenirListeEtudiantFacade();
+PlageHoraireFacadeRemote obtenirPlageHoraireFacade();
+CoursAnnuleFacadeRemote obtenirCoursAnnuleFacade();
+}

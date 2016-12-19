@@ -1,0 +1,161 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckEntites;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author clocal
+ */
+@Entity
+@Table(name = "Professeur")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Professeur.findAll", query = "SELECT p FROM Professeur p"),
+    @NamedQuery(name = "Professeur.findByNumeroEmployePK", query = "SELECT p FROM Professeur p WHERE p.numeroEmployePK = :numeroEmployePK"),
+    @NamedQuery(name = "Professeur.findByNumeroPosteProf", query = "SELECT p FROM Professeur p WHERE p.numeroPosteProf = :numeroPosteProf"),
+    @NamedQuery(name = "Professeur.findByNomPrenom", query = "Select p from Professeur p inner join Utilisateur u on u.idUtilisateur_PK = p.idUtilisateurFK where u.nom = :nom and u.prenom = :prenom"),
+    @NamedQuery(name = "Professeur.findByPrenom", query = "Select p from Professeur p inner join Utilisateur u on u.idUtilisateur_PK = p.idUtilisateurFK where u.prenom = :prenom"),
+    @NamedQuery(name = "Professeur.findByNom", query = "Select p from Professeur p inner join Utilisateur u on u.idUtilisateur_PK = p.idUtilisateurFK where u.nom = :nom"),
+    @NamedQuery(name = "Professeur.findByBureau", query = "SELECT p FROM Professeur p WHERE p.bureau = :bureau"),
+    @NamedQuery(name = "Professeur.findByDep", query = "SELECT p FROM Professeur p WHERE p.idDepartementFK = :departement")})
+public class Professeur implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "numeroEmploye_PK")
+    private String numeroEmployePK;
+    @Size(max = 4)
+    @Column(name = "numeroPosteProf")
+    private String numeroPosteProf;
+    @Size(max = 5)
+    @Column(name = "bureau")
+    private String bureau;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "disponibiliteProf")
+    private String disponibiliteProf;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professeurFK")
+    private List<Groupe> groupeList;
+    @JoinColumn(name = "idDepartement_FK", referencedColumnName = "idDepartement_PK")
+    @ManyToOne(optional = false)
+    private Departement idDepartementFK;
+    @JoinColumn(name = "idUtilisateur_FK", referencedColumnName = "idUtilisateur_PK")
+    @ManyToOne(optional = false)
+    private Utilisateur idUtilisateurFK;
+
+    public Professeur() {
+    }
+
+    public Professeur(String numeroEmployePK) {
+        this.numeroEmployePK = numeroEmployePK;
+    }
+
+    public String getNumeroEmployePK() {
+        return numeroEmployePK;
+    }
+
+    public void setNumeroEmployePK(String numeroEmployePK) {
+        this.numeroEmployePK = numeroEmployePK;
+    }
+
+    public String getNumeroPosteProf() {
+        return numeroPosteProf;
+    }
+
+    public void setNumeroPosteProf(String numeroPosteProf) {
+        this.numeroPosteProf = numeroPosteProf;
+    }
+
+    public String getBureau() {
+        return bureau;
+    }
+
+    public void setBureau(String bureau) {
+        this.bureau = bureau;
+    }
+
+    public String getDisponibiliteProf() {
+        return disponibiliteProf;
+    }
+
+    public void setDisponibiliteProf(String disponibiliteProf) {
+        this.disponibiliteProf = disponibiliteProf;
+    }
+
+    @XmlTransient
+    public List<Groupe> getGroupeList() {
+        return groupeList;
+    }
+
+    public void setGroupeList(List<Groupe> groupeList) {
+        this.groupeList = groupeList;
+    }
+
+    public Departement getIdDepartementFK() {
+        return idDepartementFK;
+    }
+
+    public void setIdDepartementFK(Departement idDepartementFK) {
+        this.idDepartementFK = idDepartementFK;
+    }
+
+    public Utilisateur getIdUtilisateurFK() {
+        return idUtilisateurFK;
+    }
+
+    public void setIdUtilisateurFK(Utilisateur idUtilisateurFK) {
+        this.idUtilisateurFK = idUtilisateurFK;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (numeroEmployePK != null ? numeroEmployePK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Professeur)) {
+            return false;
+        }
+        Professeur other = (Professeur) object;
+        if ((this.numeroEmployePK == null && other.numeroEmployePK != null) || (this.numeroEmployePK != null && !this.numeroEmployePK.equals(other.numeroEmployePK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+//        return "pckEntites.Professeur[ numeroEmployePK=" + numeroEmployePK + " ]";
+          return numeroEmployePK.toString();    
+    }
+    
+}

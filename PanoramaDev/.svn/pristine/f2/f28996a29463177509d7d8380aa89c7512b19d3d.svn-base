@@ -1,0 +1,280 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckFournisseur;
+
+import ejb.AdresseFacadeRemote;
+import ejb.CegepFacadeRemote;
+import ejb.CodePostalFacadeRemote;
+import ejb.CoursAnnuleFacadeRemote;
+import ejb.CoursFacadeRemote;
+import ejb.DepartementFacadeRemote;
+import ejb.EtudiantFacadeRemote;
+import ejb.GroupeFacadeRemote;
+import ejb.ListeEtudiantFacadeRemote;
+import ejb.LocauxFacadeRemote;
+import ejb.PersonnelSoutienFacadeRemote;
+import ejb.PlageHoraireFacadeRemote;
+import ejb.ProfesseurFacadeRemote;
+import ejb.ReserverLocauxFacadeRemote;
+import ejb.SessionFacadeRemote;
+import ejb.UtilisateurFacadeRemote;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+/**
+ *
+ * @author clocal
+ */
+public class FournisseurServicesPanorama implements FournisseurServices
+{
+    //doLookup Enseignant
+    @Override
+    public ProfesseurFacadeRemote obtenirFacadeEnseignant() 
+    {
+    ProfesseurFacadeRemote facadeProfesseur = null;  
+        try
+        {
+            facadeProfesseur = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/ProfesseurFacade!ejb.ProfesseurFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception");    
+        }
+    return facadeProfesseur; 
+    }
+    //doLookup Personnel
+    @Override
+    public PersonnelSoutienFacadeRemote obtenirFacadePersonnelSoutien() 
+    {
+    PersonnelSoutienFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/PersonnelSoutienFacade!ejb.PersonnelSoutienFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadePersonnel");    
+        }
+    return facade;
+    }
+    
+    //doLookup Adresse
+    @Override
+    public AdresseFacadeRemote obtenirFacadeAdresse()
+    {
+        AdresseFacadeRemote facade = null;
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/AdresseFacade!ejb.AdresseFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.printf("exception sur l'appel obtenirFacadeAdresse");
+        }
+        return facade;
+    }
+    
+    //doLookup CodePostal
+    @Override
+    public CodePostalFacadeRemote obtenirFacadeCodePostal()
+    {
+        CodePostalFacadeRemote facade = null;
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/CodePostalFacade!ejb.CodePostalFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.printf("exception sur l'appel obtenirFacadeCodePostal");
+        }
+        return facade;
+    }
+
+    @Override
+    public CoursFacadeRemote obtenirFacadeCours() 
+    {
+    CoursFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/CoursFacade!ejb.CoursFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeCours");    
+        }
+    return facade;
+    }
+
+    @Override
+    public SessionFacadeRemote obtenirFacadeSession() 
+    {    
+    SessionFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/SessionFacade!ejb.SessionFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeSession");    
+        }
+    return facade;
+    }
+
+    @Override
+    public DepartementFacadeRemote obtenirFacadeDepartement() 
+    {
+    DepartementFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/DepartementFacade!ejb.DepartementFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeDepartement");    
+        }
+    return facade;
+    }
+
+    @Override
+    public LocauxFacadeRemote obtenirFacadeLocaux()
+    {
+    LocauxFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/LocauxFacade!ejb.LocauxFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeLocaux");    
+        }
+    return facade;
+    }
+
+    @Override
+    public GroupeFacadeRemote obtenirFacadeGroupe() 
+    {
+    GroupeFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/GroupeFacade!ejb.GroupeFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeGroupe");    
+        }
+    return facade;    
+    }
+
+    @Override
+    public EtudiantFacadeRemote obtenirFacadeEtudiant() 
+    {
+    EtudiantFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/EtudiantFacade!ejb.EtudiantFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeEtudiant");    
+        }
+    return facade;   
+    }
+
+    @Override
+    public UtilisateurFacadeRemote obtenirFacadeUtilisateur() 
+    {
+      UtilisateurFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/UtilisateurFacade!ejb.UtilisateurFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeUtilisateur");    
+        }
+    return facade; 
+    }
+
+    @Override
+    public CegepFacadeRemote obtenirFacadeCegep() {
+        CegepFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/CegepFacade!ejb.CegepFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeCegep");    
+        }
+    return facade; 
+    }
+
+//    @Override
+//    public ListeEtudiantFacadeRemote obtenirListeEtudiantFacade() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+    
+    @Override
+    public ListeEtudiantFacadeRemote obtenirListeEtudiantFacade() 
+    {
+    ListeEtudiantFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/ListeEtudiantFacade!ejb.ListeEtudiantFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeListeEtudiant");    
+        }
+    return facade;   
+    }
+
+    @Override
+    public PlageHoraireFacadeRemote obtenirPlageHoraireFacade() 
+    {
+    PlageHoraireFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/PlageHoraireFacade!ejb.PlageHoraireFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadePlageHoraire");    
+        }
+    return facade;     
+    }
+    
+    @Override
+    public CoursAnnuleFacadeRemote obtenirCoursAnnuleFacade() 
+    {
+    CoursAnnuleFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/CoursAnnuleFacade!ejb.CoursAnnuleFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirFacadeCoursAnnule");    
+        }
+    return facade;     
+    }
+    
+    @Override
+    public ReserverLocauxFacadeRemote obtenirReserverLocauxFacade() 
+    {
+    ReserverLocauxFacadeRemote facade = null;  
+        try
+        {
+            facade = InitialContext.doLookup("java:global/Panorama2/Panorama2-ejb/ReserverLocauxFacade!ejb.ReserverLocauxFacadeRemote");
+        }
+        catch(NamingException e)
+        {
+            System.out.println("exception sur l'appel obtenirReserverLocauxAnnule");    
+        }
+    return facade;     
+    }
+    
+}

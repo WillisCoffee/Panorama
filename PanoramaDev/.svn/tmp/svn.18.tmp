@@ -1,0 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package panorama;
+
+import pckDialog.DlgConnexion;
+import pckDialog.FrmPanorama;
+import pckFournisseur.FournisseurServices;
+import pckFournisseur.ManufacturePanorama;
+
+/**
+ *
+ * @author clocal
+ */
+public class Main {
+    final static boolean activerConnexion = true; //False Permet d'utiliser le programme sans connexion.
+                                                   //True permet d'afficher la fenetre de connexion pour une utilisation normale.
+    //Enumération des droits d'accès pour la connextion, sera communiqué à la fenêtre principale pour la gestion des composantes.  
+    private enum DroitAcces 
+     {
+        AccesRefuser,
+        Resistraire,
+        API,
+        ResHumaine,
+    } 
+
+    /** 
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        ManufacturePanorama manufacture = new ManufacturePanorama(ManufacturePanorama._FournisseurPanorama);
+        FournisseurServices fs = manufacture.creerFournisseur();
+        FrmPanorama frmPrincipale = new FrmPanorama(fs);
+        frmPrincipale.show();
+        if (activerConnexion)
+        {
+            DlgConnexion dlgConnexion = new DlgConnexion(frmPrincipale,true,fs);
+            dlgConnexion.show();
+            if(dlgConnexion.isModal())
+            {
+                frmPrincipale.setGiPersonneConnecter(dlgConnexion.getGiPersonneConnecter());
+                dlgConnexion.setVisible(false);
+            }
+        }
+    }
+}

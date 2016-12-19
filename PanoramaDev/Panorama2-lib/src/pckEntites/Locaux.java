@@ -1,0 +1,162 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckEntites;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author clocal
+ */
+@Entity
+@Table(name = "Locaux")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Locaux.findAll", query = "SELECT l FROM Locaux l"),
+    @NamedQuery(name = "Locaux.findByIdLocauxPK", query = "SELECT l FROM Locaux l WHERE l.idLocauxPK = :idLocauxPK"),
+    @NamedQuery(name = "Locaux.findByNumeroLocal", query = "SELECT l FROM Locaux l WHERE l.numeroLocal = :numeroLocal"),
+    @NamedQuery(name = "Locaux.findByNombrePlace", query = "SELECT l FROM Locaux l WHERE l.nombrePlace = :nombrePlace"),
+    @NamedQuery(name = "Locaux.findByCategorie", query = "SELECT l FROM Locaux l WHERE l.categorie = :categorie"),
+    @NamedQuery(name = "Locaux.findByReserverA", query = "SELECT l FROM Locaux l WHERE l.reserverA = :reserverA")})
+public class Locaux implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idLocaux_PK")
+    private Integer idLocauxPK;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5)
+    @Column(name = "numeroLocal")
+    private String numeroLocal;
+    @Column(name = "nombrePlace")
+    private Integer nombrePlace;
+    @Size(max = 45)
+    @Column(name = "categorie")
+    private String categorie;
+    @Size(max = 128)
+    @Column(name = "reserverA")
+    private String reserverA;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLocauxFK")
+    private List<ReserverLocaux> reserverLocauxList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLocauxFK")
+    private List<PlageHoraire> plageHoraireList;
+
+    public Locaux() {
+    }
+
+    public Locaux(Integer idLocauxPK) {
+        this.idLocauxPK = idLocauxPK;
+    }
+
+    public Locaux(Integer idLocauxPK, String numeroLocal) {
+        this.idLocauxPK = idLocauxPK;
+        this.numeroLocal = numeroLocal;
+    }
+
+    public Integer getIdLocauxPK() {
+        return idLocauxPK;
+    }
+
+    public void setIdLocauxPK(Integer idLocauxPK) {
+        this.idLocauxPK = idLocauxPK;
+    }
+
+    public String getNumeroLocal() {
+        return numeroLocal;
+    }
+
+    public void setNumeroLocal(String numeroLocal) {
+        this.numeroLocal = numeroLocal;
+    }
+
+    public Integer getNombrePlace() {
+        return nombrePlace;
+    }
+
+    public void setNombrePlace(Integer nombrePlace) {
+        this.nombrePlace = nombrePlace;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public String getReserverA() {
+        return reserverA;
+    }
+
+    public void setReserverA(String reserverA) {
+        this.reserverA = reserverA;
+    }
+
+    @XmlTransient
+    public List<ReserverLocaux> getReserverLocauxList() {
+        return reserverLocauxList;
+    }
+
+    public void setReserverLocauxList(List<ReserverLocaux> reserverLocauxList) {
+        this.reserverLocauxList = reserverLocauxList;
+    }
+
+    @XmlTransient
+    public List<PlageHoraire> getPlageHoraireList() {
+        return plageHoraireList;
+    }
+
+    public void setPlageHoraireList(List<PlageHoraire> plageHoraireList) {
+        this.plageHoraireList = plageHoraireList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idLocauxPK != null ? idLocauxPK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Locaux)) {
+            return false;
+        }
+        Locaux other = (Locaux) object;
+        if ((this.idLocauxPK == null && other.idLocauxPK != null) || (this.idLocauxPK != null && !this.idLocauxPK.equals(other.idLocauxPK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+//        return "pckEntites.Locaux[ idLocauxPK=" + idLocauxPK + " ]";
+        return numeroLocal;
+    }
+    
+}

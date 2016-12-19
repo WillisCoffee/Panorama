@@ -1,0 +1,369 @@
+package pckDialog;
+
+// William Thibodeau
+import java.util.ArrayList;
+import java.util.List;
+import org.jdesktop.observablecollections.ObservableCollections;
+import pckEntites.Cours;
+import pckEntites.Departement;
+import static pckValidation.Validation.validerNom;
+import static pckValidation.Validation.validerNombre;
+
+// Fenêtre permettant la modification et l'ajout d'un cours
+public class DlgCours extends javax.swing.JDialog 
+{
+    // <editor-fold defaultstate="collapsed" desc="Variables">
+    boolean result = false;
+    Cours unCours;
+    List<Departement> lstDepartement = ObservableCollections.observableList(new ArrayList<>());
+    //</editor-fold>-
+    
+    // <editor-fold defaultstate="collapsed" desc="Constructeurs">
+    public DlgCours(java.awt.Frame parent, boolean modal, Cours leCours, List<Departement> lstDep) 
+    {
+        super(parent, modal);
+        lstDepartement = lstDep;
+        unCours = leCours;
+        initComponents();
+        
+        initialiserChamps();
+    }
+    
+    // Constructeur pour l'ajout
+    public DlgCours(java.awt.Frame parent, boolean modal, List<Departement> lstDep)
+    {
+        super(parent, modal);
+        lstDepartement = lstDep;
+        unCours = new Cours();
+        initComponents();
+    }
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="getter / setter">
+    public Cours getUnCours() {
+        return unCours;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
+
+    public List<Departement> getLstDepartement() {
+        return lstDepartement;
+    }
+
+    public void setLstDepartement(List<Departement> lstDepartement) {
+        this.lstDepartement = lstDepartement;
+    }
+    //</editor-fold>
+    
+    @SuppressWarnings(value = "unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
+        pnlTitre = new javax.swing.JPanel();
+        lblTitre = new javax.swing.JLabel();
+        pnlCentre = new javax.swing.JPanel();
+        lbl = new javax.swing.JLabel();
+        txfNumCours = new javax.swing.JTextField();
+        lblNomCours = new javax.swing.JLabel();
+        txfNomCours = new javax.swing.JTextField();
+        lblDepartement = new javax.swing.JLabel();
+        cmbDepartement = new javax.swing.JComboBox<>();
+        txfPondération = new javax.swing.JTextField();
+        txfPondération1 = new javax.swing.JTextField();
+        txfPondération2 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        pnlBas = new javax.swing.JPanel();
+        pnlMessage = new javax.swing.JPanel();
+        lblMessage = new javax.swing.JLabel();
+        pnlBoutons = new javax.swing.JPanel();
+        btnAjouter = new javax.swing.JButton();
+        btnAnnuler = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gérer cours");
+        setMinimumSize(new java.awt.Dimension(400, 180));
+
+        lblTitre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lblTitre.setText("Cours");
+        pnlTitre.add(lblTitre);
+
+        getContentPane().add(pnlTitre, java.awt.BorderLayout.PAGE_START);
+
+        pnlCentre.setPreferredSize(new java.awt.Dimension(300, 160));
+
+        lbl.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        lbl.setText("Numero du cours :");
+
+        txfNumCours.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        lblNomCours.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        lblNomCours.setText("Nom du cours :");
+
+        txfNomCours.setMinimumSize(new java.awt.Dimension(140, 25));
+        txfNomCours.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        lblDepartement.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        lblDepartement.setText("Département :");
+
+        cmbDepartement.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administration" }));
+        cmbDepartement.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${lstDepartement}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cmbDepartement);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        txfPondération.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        txfPondération1.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        txfPondération2.setPreferredSize(new java.awt.Dimension(140, 25));
+
+        jLabel1.setText("Théorique:");
+
+        jLabel2.setText("Pratique:");
+
+        jLabel3.setText("Travaux:");
+
+        javax.swing.GroupLayout pnlCentreLayout = new javax.swing.GroupLayout(pnlCentre);
+        pnlCentre.setLayout(pnlCentreLayout);
+        pnlCentreLayout.setHorizontalGroup(
+            pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCentreLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlCentreLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfPondération1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfPondération, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfPondération2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCentreLayout.createSequentialGroup()
+                        .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNomCours)
+                            .addComponent(lbl)
+                            .addComponent(lblDepartement))
+                        .addGap(4, 4, 4)
+                        .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbDepartement, 0, 154, Short.MAX_VALUE)
+                            .addComponent(txfNomCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txfNumCours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(51, 51, 51))
+        );
+        pnlCentreLayout.setVerticalGroup(
+            pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCentreLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl)
+                    .addComponent(txfNumCours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfNomCours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNomCours))
+                .addGap(11, 11, 11)
+                .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDepartement)
+                    .addComponent(cmbDepartement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCentreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfPondération1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfPondération, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfPondération2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addContainerGap())
+        );
+
+        getContentPane().add(pnlCentre, java.awt.BorderLayout.CENTER);
+
+        pnlBas.setPreferredSize(new java.awt.Dimension(300, 59));
+        pnlBas.setLayout(new java.awt.BorderLayout());
+
+        lblMessage.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        pnlMessage.add(lblMessage);
+
+        pnlBas.add(pnlMessage, java.awt.BorderLayout.PAGE_START);
+
+        btnAjouter.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAjouter.setMnemonic('a');
+        btnAjouter.setText("Accepter");
+        btnAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjouterActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnAjouter);
+
+        btnAnnuler.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAnnuler.setMnemonic('n');
+        btnAnnuler.setText("Annuler");
+        btnAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnnulerActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnAnnuler);
+
+        pnlBas.add(pnlBoutons, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(pnlBas, java.awt.BorderLayout.PAGE_END);
+
+        bindingGroup.bind();
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    // <editor-fold defaultstate="collapsed" desc="Actions">
+    private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
+        setResult(false);
+        
+        setVisible(false);
+    }//GEN-LAST:event_btnAnnulerActionPerformed
+
+    private void btnAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterActionPerformed
+        if (validerInfos())
+        {
+            setResult(true);
+            setInfos();
+            setVisible(false);
+        }
+    }//GEN-LAST:event_btnAjouterActionPerformed
+//</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Opérations">
+    private void setInfos()
+    {
+        unCours.setNomCours(txfNomCours.getText());
+        unCours.setNumeroCours(Integer.parseInt(txfNumCours.getText()));
+        unCours.setPonderation(obtenirPonderation());
+        unCours.setIdDepartementFK(lstDepartement.get(cmbDepartement.getSelectedIndex()));
+    }
+    
+    private boolean validerInfos()
+    {
+        if (txfNumCours.getText().length() != 3)
+        {   
+            lblMessage.setText("Veuillez entrer un numéro de cours valide.");
+            return false;
+        }
+        if ( txfNomCours.getText().length() < 5 || !validerNom(txfNomCours.getText()) || txfNomCours.getText().length() > 64)
+        {
+            lblMessage.setText("Veuillez entrer un nom de cours valide.");
+            return false;
+        }
+        if (!validerNombre(txfPondération.getText()) && !validerNombre(txfPondération1.getText()) && !validerNombre(txfPondération2.getText()))
+        {
+            lblMessage.setText("Veuillez entrer une pondération valide.");
+            return false;
+        }
+        return true;
+    }
+    
+    private String obtenirPonderation()
+    {
+        return txfPondération1.getText() 
+                + "-" + txfPondération.getText() 
+                + "-" + txfPondération2.getText();
+    }
+    
+    private void initialiserChamps()
+    {
+        txfNumCours.setText(String.valueOf(unCours.getNumeroCours()));
+        txfNomCours.setText(unCours.getNomCours());
+        String[] ponderation = diviserPonderation();
+        txfPondération1.setText(ponderation[0]);
+        txfPondération.setText(ponderation[1]);
+        txfPondération2.setText(ponderation[2]);
+        cmbDepartement.setSelectedIndex(unCours.getIdDepartementFK().getIdDepartementPK() - 1);
+    }
+    
+    private String[] diviserPonderation()
+    {
+        return unCours.getPonderation().split("-");
+    }
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Main">
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DlgCours.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DlgCours.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DlgCours.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DlgCours.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgCours dialog = new DlgCours(new javax.swing.JFrame(), true, null, null);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Composants">
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAjouter;
+    private javax.swing.JButton btnAnnuler;
+    private javax.swing.JComboBox<String> cmbDepartement;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lbl;
+    private javax.swing.JLabel lblDepartement;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JLabel lblNomCours;
+    private javax.swing.JLabel lblTitre;
+    private javax.swing.JPanel pnlBas;
+    private javax.swing.JPanel pnlBoutons;
+    private javax.swing.JPanel pnlCentre;
+    private javax.swing.JPanel pnlMessage;
+    private javax.swing.JPanel pnlTitre;
+    private javax.swing.JTextField txfNomCours;
+    private javax.swing.JTextField txfNumCours;
+    private javax.swing.JTextField txfPondération;
+    private javax.swing.JTextField txfPondération1;
+    private javax.swing.JTextField txfPondération2;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
+    // End of variables declaration//GEN-END:variables
+    //</editor-fold>
+}

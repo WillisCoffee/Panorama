@@ -1,0 +1,747 @@
+package pckDialog;
+
+// William Thibodeau
+import ejb.GroupeFacadeRemote;
+import ejb.LocauxFacadeRemote;
+import ejb.PlageHoraireFacadeRemote;
+import ejb.SessionFacadeRemote;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.runtime.ListAdapter.create;
+import pckEntites.Cours;
+import pckEntites.Groupe;
+import pckEntites.Locaux;
+import pckEntites.PlageHoraire;
+import static pckValidation.Validation.validerHeure;
+
+// Fenêtre servant à voir l'horaire d'un étudiant et importer un horaire
+public class DlgGroupeHoraire extends javax.swing.JDialog 
+{
+    //<editor-fold defaultstate="collapsed" desc="Variables">
+    Groupe unGroupe;
+    List<Locaux> lstLocaux;
+    List<PlageHoraire> lstPlageHoraire;
+    List<Plage> lstPlage;
+    
+    // Facades
+    PlageHoraireFacadeRemote facadePlageHoraire;
+    SessionFacadeRemote facadeSession;
+    LocauxFacadeRemote facadeLocaux;
+    GroupeFacadeRemote facadeGroupe;
+    
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Contructeurs">
+    public DlgGroupeHoraire(java.awt.Frame parent, boolean modal, Groupe leGroupe,
+                                        LocauxFacadeRemote fl,
+                                        PlageHoraireFacadeRemote fph,
+                                        GroupeFacadeRemote gf)
+    {
+        super(parent, modal);
+        unGroupe = leGroupe;
+        facadeLocaux = fl;
+        facadePlageHoraire = fph;
+        facadeGroupe = gf;
+        lstPlageHoraire = facadePlageHoraire.findByGroupe(unGroupe);
+        lstLocaux = facadeLocaux.findAll();
+        lstPlage = new ArrayList<>();
+        
+        initComponents();
+        initialiserChamps();
+    }
+    
+    public DlgGroupeHoraire(java.awt.Frame parent, boolean modal) 
+    {
+        super(parent, modal);
+        initComponents();
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="getter / setter">
+
+    public Groupe getUnGroupe() {
+        return unGroupe;
+    }
+
+    public void setUnGroupe(Groupe unGroupe) {
+        this.unGroupe = unGroupe;
+    }
+
+    public List<Locaux> getLstLocaux() {
+        return lstLocaux;
+    }
+
+    public void setLstLocaux(List<Locaux> lstLocaux) {
+        this.lstLocaux = lstLocaux;
+    }
+    //</editor-fold>
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
+        fileChooserHoraire = new javax.swing.JFileChooser();
+        pnlTitre = new javax.swing.JPanel();
+        lblTitre = new javax.swing.JLabel();
+        pnlContenu = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblHoraire = new javax.swing.JTable();
+        pnlEtudiant = new javax.swing.JPanel();
+        labelNumero = new javax.swing.JLabel();
+        labelCours = new javax.swing.JLabel();
+        labelProfesseur = new javax.swing.JLabel();
+        lblNumero = new javax.swing.JLabel();
+        lblCours = new javax.swing.JLabel();
+        lblPrenom = new javax.swing.JLabel();
+        lblNom = new javax.swing.JLabel();
+        pnlNouvellePlage = new javax.swing.JPanel();
+        txfHeureDebut = new javax.swing.JTextField();
+        txfHeureFin = new javax.swing.JTextField();
+        cmbJour = new javax.swing.JComboBox<>();
+        cmbLocal = new javax.swing.JComboBox<>();
+        lblHeureDebut = new javax.swing.JLabel();
+        lblJour = new javax.swing.JLabel();
+        lblHeureFin = new javax.swing.JLabel();
+        lblLocal = new javax.swing.JLabel();
+        btnAjouter = new javax.swing.JButton();
+        pnlBas = new javax.swing.JPanel();
+        pnlMessage = new javax.swing.JPanel();
+        lblMessage = new javax.swing.JLabel();
+        pnlBoutons = new javax.swing.JPanel();
+        btnFermer = new javax.swing.JButton();
+        btnImporter = new javax.swing.JButton();
+        btnSupprimer = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gérer horaire d'un groupe");
+
+        lblTitre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lblTitre.setText("Gérer horaire");
+        pnlTitre.add(lblTitre);
+
+        getContentPane().add(pnlTitre, java.awt.BorderLayout.PAGE_START);
+
+        tblHoraire.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Heure", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblHoraire.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tblHoraire);
+        tblHoraire.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        pnlEtudiant.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelNumero.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        labelNumero.setText("Numéro :");
+
+        labelCours.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        labelCours.setText("Cour :");
+
+        labelProfesseur.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        labelProfesseur.setText("Professeur :");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${unGroupe.idGroupePK}"), lblNumero, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${unGroupe.idCoursFK.nomCours}"), lblCours, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${unGroupe.professeurFK.idUtilisateurFK.prenom}"), lblPrenom, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${unGroupe.professeurFK.idUtilisateurFK.nom}"), lblNom, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        javax.swing.GroupLayout pnlEtudiantLayout = new javax.swing.GroupLayout(pnlEtudiant);
+        pnlEtudiant.setLayout(pnlEtudiantLayout);
+        pnlEtudiantLayout.setHorizontalGroup(
+            pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEtudiantLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelProfesseur)
+                    .addComponent(labelCours)
+                    .addComponent(labelNumero))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumero)
+                    .addComponent(lblCours)
+                    .addGroup(pnlEtudiantLayout.createSequentialGroup()
+                        .addComponent(lblPrenom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNom)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlEtudiantLayout.setVerticalGroup(
+            pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEtudiantLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNumero)
+                    .addComponent(lblNumero))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCours)
+                    .addComponent(lblCours))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlEtudiantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelProfesseur)
+                    .addComponent(lblPrenom)
+                    .addComponent(lblNom))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlNouvellePlage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        cmbJour.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${lstLocaux}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cmbLocal);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        lblHeureDebut.setText("Heure début :");
+
+        lblJour.setText("Jour de la semaine :");
+
+        lblHeureFin.setText("Heure fin :");
+
+        lblLocal.setText("Local :");
+
+        javax.swing.GroupLayout pnlNouvellePlageLayout = new javax.swing.GroupLayout(pnlNouvellePlage);
+        pnlNouvellePlage.setLayout(pnlNouvellePlageLayout);
+        pnlNouvellePlageLayout.setHorizontalGroup(
+            pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlNouvellePlageLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblHeureDebut)
+                    .addComponent(lblJour))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbJour, 0, 150, Short.MAX_VALUE)
+                    .addComponent(txfHeureDebut))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHeureFin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblLocal, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txfHeureFin)
+                    .addComponent(cmbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
+        );
+        pnlNouvellePlageLayout.setVerticalGroup(
+            pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNouvellePlageLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txfHeureDebut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblHeureDebut))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txfHeureFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblHeureFin)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlNouvellePlageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblJour)
+                    .addComponent(lblLocal))
+                .addGap(36, 36, 36))
+        );
+
+        btnAjouter.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnAjouter.setText("Ajouter");
+        btnAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjouterActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContenuLayout = new javax.swing.GroupLayout(pnlContenu);
+        pnlContenu.setLayout(pnlContenuLayout);
+        pnlContenuLayout.setHorizontalGroup(
+            pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                    .addComponent(pnlEtudiant, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlNouvellePlage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAjouter)
+                .addGap(269, 269, 269))
+        );
+        pnlContenuLayout.setVerticalGroup(
+            pnlContenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenuLayout.createSequentialGroup()
+                .addComponent(pnlEtudiant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlNouvellePlage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAjouter)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(pnlContenu, java.awt.BorderLayout.CENTER);
+
+        pnlBas.setPreferredSize(new java.awt.Dimension(0, 59));
+        pnlBas.setLayout(new java.awt.BorderLayout());
+
+        lblMessage.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        pnlMessage.add(lblMessage);
+
+        pnlBas.add(pnlMessage, java.awt.BorderLayout.PAGE_START);
+
+        btnFermer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnFermer.setMnemonic('c');
+        btnFermer.setText("Fermer");
+        btnFermer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFermerActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnFermer);
+
+        btnImporter.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnImporter.setMnemonic('i');
+        btnImporter.setText("Importer");
+        btnImporter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImporterActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnImporter);
+
+        btnSupprimer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnSupprimer.setText("Supprimer");
+        btnSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupprimerActionPerformed(evt);
+            }
+        });
+        pnlBoutons.add(btnSupprimer);
+
+        pnlBas.add(pnlBoutons, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(pnlBas, java.awt.BorderLayout.PAGE_END);
+
+        bindingGroup.bind();
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    //<editor-fold defaultstate="collapsed" desc="Actions">
+    private void btnAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterActionPerformed
+        if (validerInfos() && !plageExiste())
+        {
+            getInfos();
+            lstPlage = new ArrayList<>();
+            lstPlageHoraire = facadePlageHoraire.findByGroupe(unGroupe);
+            initialiserChamps();
+        }
+        else
+        {
+            lblMessage.setText("Une plage horaire existe déjà durant ces heures durant cette journée.");
+        }
+    }//GEN-LAST:event_btnAjouterActionPerformed
+
+    private void btnFermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFermerActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnFermerActionPerformed
+
+    private void btnSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprimerActionPerformed
+        if (tblHoraire.getSelectedColumn() != -1 || tblHoraire.getSelectedColumn() != 0)
+            chercherSelection();
+        else
+            lblMessage.setText("Veuillez choisir une plage horaire.");
+    }//GEN-LAST:event_btnSupprimerActionPerformed
+
+    private void btnImporterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImporterActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers textes (.txt)", "txt");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) 
+        {
+            try
+            {
+                FileInputStream fstream = new FileInputStream(chooser.getSelectedFile());
+                BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+
+                String strLine;
+
+                while ((strLine = br.readLine()) != null)   
+                {
+                    String[] uneLigne = strLine.split("/");
+                    importerUnePlage(uneLigne);
+                }
+
+                br.close();
+                System.out.println("Importation terminée!");
+            }
+            catch(Exception e)
+            {
+                System.out.println("Erreur lors de la lecture du fichier d'horaire.");
+            }
+        }
+    }//GEN-LAST:event_btnImporterActionPerformed
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Classe">
+    class Plage
+    {
+           private int _debut;
+           private int _fin;
+           private String _contenu;
+           private String _journee;
+           
+           public Plage(int debut, int fin, String contenu, String journee)
+           {
+               _debut = debut;
+               _fin = fin;
+               _contenu = contenu;
+               _journee = journee;
+           }
+           
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Opérations">
+    private void chercherSelection()
+    {
+        boolean trouve = false;
+        for (PlageHoraire p : lstPlageHoraire)
+        {
+            int colonne = 0;
+            
+            //Convertir les dates en int
+            DateFormat sdf = new SimpleDateFormat("kk:mm");
+            String dateTempo = sdf.format(p.getHeureDebut());
+            int debut = Integer.parseInt(dateTempo.substring(0, 2));
+
+            dateTempo = sdf.format(p.getHeureFin());
+            int fin = Integer.parseInt(dateTempo.substring(0, 2));
+            
+            //On obtient la colonne
+            switch(p.getJour())
+            {
+                case    "Lundi":  colonne = 1;
+                                  break;
+                case    "Mardi":  colonne = 2;
+                                  break;
+                case "Mercredi":  colonne = 3;
+                                  break;
+                case    "Jeudi":  colonne = 4;
+                                  break;
+                case "Vendredi":  colonne = 5;
+                                  break;
+            }
+            
+            if (tblHoraire.getSelectedColumn() == colonne)
+            {
+                if((debut - 8) <= tblHoraire.getSelectedRow() && tblHoraire.getSelectedRow() <= (fin - 8))
+                {
+                    //Supprimer et vide la plage horaire du tableau
+                   facadePlageHoraire.remove(p);
+                   lstPlageHoraire = facadePlageHoraire.findByGroupe(unGroupe);
+                   for( int x = debut; x < fin; x++)
+                   {
+                       tblHoraire.setValueAt("", x - 8, colonne);
+                   }
+                   
+                   trouve = true;
+                }
+            }
+        }
+        if (!trouve)
+            lblMessage.setText("Veuillez choisir un emplacement ayant une plage horaire.");
+    }
+    
+    private boolean plageExiste()
+    {
+        int colonne = 0;
+        
+        switch(String.valueOf(cmbJour.getSelectedItem()))
+        {
+                case    "Lundi":  colonne = 1;
+                                  break;
+                case    "Mardi":  colonne = 2;
+                                  break;
+                case "Mercredi":  colonne = 3;
+                                  break;
+                case    "Jeudi":  colonne = 4;
+                                  break;
+                case "Vendredi":  colonne = 5;
+                                  break;
+        }
+        
+        int debut;
+        int fin;
+        
+        debut = Integer.parseInt(txfHeureDebut.getText().substring(0, 2));
+        fin = Integer.parseInt(txfHeureFin.getText().substring(0, 2));
+
+        for (int i = debut; i < fin; i++)
+        {
+            if (tblHoraire.getValueAt(i - 8, colonne) != null)
+            {
+                if (tblHoraire.getValueAt(i - 8, colonne) != "")
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean validerInfos()
+    {
+        if (!validerHeure(txfHeureDebut.getText()))
+        {
+            lblMessage.setText("Veuillez entrer une heure de début valide. Format(00:00)");
+            return false;
+        }
+        if (!validerHeure(txfHeureFin.getText()))
+        {
+            lblMessage.setText("Veuillez entrer une heure de fin valide. Format(00:00) ");
+            return false;
+        }
+        return true;
+    }
+    
+    private void getInfos()
+    {
+        try
+        {
+            PlageHoraire ph = new PlageHoraire();
+            ph.setIdGroupeFK(unGroupe);                                         //Groupe
+            ph.setIdLocauxFK(lstLocaux.get(cmbLocal.getSelectedIndex()));       //Locaux
+            ph.setIdSessionFK(unGroupe.getIdSessionFK());   //Session
+            ph.setJour(String.valueOf(cmbJour.getSelectedItem()));              //Jour
+
+            DateFormat sdf = new SimpleDateFormat("kk:mm");
+            Date heureDebut = sdf.parse(txfHeureDebut.getText());
+            Date heureFin = sdf.parse(txfHeureFin.getText());
+
+            ph.setHeureDebut(heureDebut);                                       //Heure début
+            ph.setHeureFin(heureFin);                                           //Heure fin
+            facadePlageHoraire.create(ph);
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Erreur lors de la conversion en date");
+        }
+    }
+    
+    private void initialiserChamps()
+    {
+        insererHeures();
+        insererPlages();
+    }
+    
+    private void insererHeures()
+    {
+        DefaultTableModel model = (DefaultTableModel)tblHoraire.getModel();
+
+        model.setValueAt("8h",  0, 0);
+        model.setValueAt("9h",  1, 0);
+        model.setValueAt("10h", 2, 0);
+        model.setValueAt("11h", 3, 0);
+        model.setValueAt("12h", 4, 0);
+        model.setValueAt("13h", 5, 0);
+        model.setValueAt("14h", 6, 0);
+        model.setValueAt("15h", 7, 0);
+        model.setValueAt("16h", 8, 0);
+        model.setValueAt("17h", 9, 0);
+    }
+    
+    private void insererPlages()
+    {
+        for (PlageHoraire p : lstPlageHoraire)
+        {
+            lstPlage.add(creerPlage(p));
+        }
+        
+        for (Plage pl : lstPlage)
+        {
+            switch(pl._journee)
+            {
+                case    "Lundi":  insererJournee(1, pl);
+                                  break;
+                case    "Mardi":  insererJournee(2, pl);
+                                  break;
+                case "Mercredi":  insererJournee(3, pl);
+                                  break;
+                case    "Jeudi":  insererJournee(4, pl);
+                                  break;
+                case "Vendredi":  insererJournee(5, pl);
+                                  break;
+            }
+        }
+    }
+    
+    private void insererJournee(int colonne, Plage laPlage)
+    {
+        for (int i = laPlage._debut; i < laPlage._fin; i++)
+        {
+            tblHoraire.setValueAt(laPlage._contenu, i - 8, colonne);
+        }
+    }
+    
+    private Plage creerPlage(PlageHoraire p)
+    {
+        int debut;
+        int fin;
+        
+        DateFormat sdf = new SimpleDateFormat("kk:mm");
+        String dateTempo = sdf.format(p.getHeureDebut());
+        debut = Integer.parseInt(dateTempo.substring(0, 2));
+        
+        dateTempo = sdf.format(p.getHeureFin());
+        fin = Integer.parseInt(dateTempo.substring(0, 2));
+        
+        Plage unePlage =  new Plage(debut, fin,p.getIdGroupeFK().getIdCoursFK().getNomCours() ,p.getJour());
+        return unePlage;
+    }
+    
+    private void importerUnePlage(String[] uneLigne)
+    {
+        Locaux unLocaux = facadeLocaux.findByNumeroLocaux(uneLigne[4]);
+        Groupe leGroupe = facadeGroupe.findByIdGroupePK(Integer.valueOf(uneLigne[0]));
+        
+        //Nouvelle plage horaire venant de la ligne du fichier
+        PlageHoraire unePlageHoraire = new PlageHoraire();
+        unePlageHoraire.setIdLocauxFK(unLocaux);
+        unePlageHoraire.setIdGroupeFK(leGroupe);
+        unePlageHoraire.setJour(uneLigne[3]);
+        unePlageHoraire.setIdSessionFK(leGroupe.getIdSessionFK());
+        
+        try
+        {
+            DateFormat sdf = new SimpleDateFormat("kk:mm");
+            unePlageHoraire.setHeureDebut(sdf.parse(uneLigne[1]));
+            unePlageHoraire.setHeureFin(sdf.parse(uneLigne[2]));
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erreur de convertion en format heure (00:00).");
+        }
+        
+        facadePlageHoraire.create(unePlageHoraire);
+        System.out.println("Plage ajoutée!");
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Main">
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DlgHoraire.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DlgHoraire.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DlgHoraire.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DlgHoraire.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgHoraire dialog = new DlgHoraire(new javax.swing.JFrame(), true, null, null, null, null, null);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Composants">
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAjouter;
+    private javax.swing.JButton btnFermer;
+    private javax.swing.JButton btnImporter;
+    private javax.swing.JButton btnSupprimer;
+    private javax.swing.JComboBox<String> cmbJour;
+    private javax.swing.JComboBox<String> cmbLocal;
+    private javax.swing.JFileChooser fileChooserHoraire;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelCours;
+    private javax.swing.JLabel labelNumero;
+    private javax.swing.JLabel labelProfesseur;
+    private javax.swing.JLabel lblCours;
+    private javax.swing.JLabel lblHeureDebut;
+    private javax.swing.JLabel lblHeureFin;
+    private javax.swing.JLabel lblJour;
+    private javax.swing.JLabel lblLocal;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JLabel lblNom;
+    private javax.swing.JLabel lblNumero;
+    private javax.swing.JLabel lblPrenom;
+    private javax.swing.JLabel lblTitre;
+    private javax.swing.JPanel pnlBas;
+    private javax.swing.JPanel pnlBoutons;
+    private javax.swing.JPanel pnlContenu;
+    private javax.swing.JPanel pnlEtudiant;
+    private javax.swing.JPanel pnlMessage;
+    private javax.swing.JPanel pnlNouvellePlage;
+    private javax.swing.JPanel pnlTitre;
+    private javax.swing.JTable tblHoraire;
+    private javax.swing.JTextField txfHeureDebut;
+    private javax.swing.JTextField txfHeureFin;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
+    // End of variables declaration//GEN-END:variables
+}
+//</editor-fold>

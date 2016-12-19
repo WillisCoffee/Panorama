@@ -1,0 +1,304 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckEntites;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author clocal
+ */
+@Entity
+@Table(name = "Utilisateur")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u"),
+    @NamedQuery(name = "Utilisateur.findByIdUtilisateurPK", query = "SELECT u FROM Utilisateur u WHERE u.idUtilisateurPK = :idUtilisateurPK"),
+    @NamedQuery(name = "Utilisateur.findByNom", query = "SELECT u FROM Utilisateur u WHERE u.nom = :nom"),
+    @NamedQuery(name = "Utilisateur.findByPrenom", query = "SELECT u FROM Utilisateur u WHERE u.prenom = :prenom"),
+    @NamedQuery(name = "Utilisateur.findByDateNaissance", query = "SELECT u FROM Utilisateur u WHERE u.dateNaissance = :dateNaissance"),
+    @NamedQuery(name = "Utilisateur.findByMotPasse", query = "SELECT u FROM Utilisateur u WHERE u.motPasse = :motPasse"),
+    @NamedQuery(name = "Utilisateur.findByTelephone", query = "SELECT u FROM Utilisateur u WHERE u.telephone = :telephone"),
+    @NamedQuery(name = "Utilisateur.findByCellulaire", query = "SELECT u FROM Utilisateur u WHERE u.cellulaire = :cellulaire"),
+    @NamedQuery(name = "Utilisateur.findByCourriel", query = "SELECT u FROM Utilisateur u WHERE u.courriel = :courriel"),
+    @NamedQuery(name = "Utilisateur.findByNas", query = "SELECT u FROM Utilisateur u WHERE u.nas = :nas"),
+    @NamedQuery(name = "Utilisateur.findByCreditImpression", query = "SELECT u FROM Utilisateur u WHERE u.creditImpression = :creditImpression")})
+
+
+public class Utilisateur implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idUtilisateur_PK")
+    private Integer idUtilisateurPK;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nom")
+    private String nom;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "prenom")
+    private String prenom;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "dateNaissance")
+    @Temporal(TemporalType.DATE)
+    private Date dateNaissance;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "motPasse")
+    private String motPasse;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 12)
+    @Column(name = "telephone")
+    private String telephone;
+    @Size(max = 12)
+    @Column(name = "cellulaire")
+    private String cellulaire;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "courriel")
+    private String courriel;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "photographie")
+    private byte[] photographie;
+    @Column(name = "nas")
+    private Integer nas;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "creditImpression")
+    private BigDecimal creditImpression;
+    @OneToMany(mappedBy = "idUtilisateurFK")
+    private List<Adresse> adresseList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateurFK")
+    private List<Etudiant> etudiantList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateurFK")
+    private List<PersonnelSoutien> personnelSoutienList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateurFK")
+    private List<Message> messageList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateurFK")
+    private List<Professeur> professeurList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateurFK")
+    private List<Destinataire> destinataireList;
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(Integer idUtilisateurPK) {
+        this.idUtilisateurPK = idUtilisateurPK;
+    }
+
+    public Utilisateur(Integer idUtilisateurPK, String nom, String prenom, Date dateNaissance, String motPasse, String telephone, String courriel, byte[] photographie, BigDecimal creditImpression) {
+        this.idUtilisateurPK = idUtilisateurPK;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.motPasse = motPasse;
+        this.telephone = telephone;
+        this.courriel = courriel;
+        this.photographie = photographie;
+        this.creditImpression = creditImpression;
+    }
+
+    public Integer getIdUtilisateurPK() {
+        return idUtilisateurPK;
+    }
+
+    public void setIdUtilisateurPK(Integer idUtilisateurPK) {
+        this.idUtilisateurPK = idUtilisateurPK;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public Date getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getMotPasse() {
+        return motPasse;
+    }
+
+    public void setMotPasse(String motPasse) {
+        this.motPasse = motPasse;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getCellulaire() {
+        return cellulaire;
+    }
+
+    public void setCellulaire(String cellulaire) {
+        this.cellulaire = cellulaire;
+    }
+
+    public String getCourriel() {
+        return courriel;
+    }
+
+    public void setCourriel(String courriel) {
+        this.courriel = courriel;
+    }
+
+    public byte[] getPhotographie() {
+        return photographie;
+    }
+
+    public void setPhotographie(byte[] photographie) {
+        this.photographie = photographie;
+    }
+
+    public Integer getNas() {
+        return nas;
+    }
+
+    public void setNas(Integer nas) {
+        this.nas = nas;
+    }
+
+    public BigDecimal getCreditImpression() {
+        return creditImpression;
+    }
+
+    public void setCreditImpression(BigDecimal creditImpression) {
+        this.creditImpression = creditImpression;
+    }
+
+    @XmlTransient
+    public List<Adresse> getAdresseList() {
+        return adresseList;
+    }
+
+    public void setAdresseList(List<Adresse> adresseList) {
+        this.adresseList = adresseList;
+    }
+
+    @XmlTransient
+    public List<Etudiant> getEtudiantList() {
+        return etudiantList;
+    }
+
+    public void setEtudiantList(List<Etudiant> etudiantList) {
+        this.etudiantList = etudiantList;
+    }
+
+    @XmlTransient
+    public List<PersonnelSoutien> getPersonnelSoutienList() {
+        return personnelSoutienList;
+    }
+
+    public void setPersonnelSoutienList(List<PersonnelSoutien> personnelSoutienList) {
+        this.personnelSoutienList = personnelSoutienList;
+    }
+
+    @XmlTransient
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
+
+    @XmlTransient
+    public List<Professeur> getProfesseurList() {
+        return professeurList;
+    }
+
+    public void setProfesseurList(List<Professeur> professeurList) {
+        this.professeurList = professeurList;
+    }
+
+    @XmlTransient
+    public List<Destinataire> getDestinataireList() {
+        return destinataireList;
+    }
+
+    public void setDestinataireList(List<Destinataire> destinataireList) {
+        this.destinataireList = destinataireList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUtilisateurPK != null ? idUtilisateurPK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Utilisateur)) {
+            return false;
+        }
+        Utilisateur other = (Utilisateur) object;
+        if ((this.idUtilisateurPK == null && other.idUtilisateurPK != null) || (this.idUtilisateurPK != null && !this.idUtilisateurPK.equals(other.idUtilisateurPK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pckEntites.Utilisateur[ idUtilisateurPK=" + idUtilisateurPK + " ]";
+    }
+    
+}

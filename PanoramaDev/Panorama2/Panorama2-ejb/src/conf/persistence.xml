@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Panorama2-ejbPU" transaction-type="JTA">
+    <jta-data-source>DS_Panorama</jta-data-source>
+    <class>pckEntites.Adresse</class>
+    <class>pckEntites.Cegep</class>
+    <class>pckEntites.CodePostal</class>
+    <class>pckEntites.Communique</class>
+    <class>pckEntites.Cours</class>
+    <class>pckEntites.CoursAnnule</class>
+    <class>pckEntites.Departement</class>
+    <class>pckEntites.Destinataire</class>
+    <class>pckEntites.Document</class>
+    <class>pckEntites.Etudiant</class>
+    <class>pckEntites.Evaluation</class>
+    <class>pckEntites.Groupe</class>
+    <class>pckEntites.ListeEtudiant</class>
+    <class>pckEntites.Locaux</class>
+    <class>pckEntites.Message</class>
+    <class>pckEntites.Note</class>
+    <class>pckEntites.PersonnelSoutien</class>
+    <class>pckEntites.PieceJointe</class>
+    <class>pckEntites.PlageHoraire</class>
+    <class>pckEntites.Professeur</class>
+    <class>pckEntites.ReserverLocaux</class>
+    <class>pckEntites.Session</class>
+    <class>pckEntites.Utilisateur</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>

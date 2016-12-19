@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-12-08T15:14:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bulletin_2" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ced6619-64ed-40b1-8195-1d28667707c8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Horizon"/>
+	<parameter name="Matricule" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 	TRUNCATE((100*SUM(equipe05.Note.pointsObtenus)/SUM(equipe05.Evaluation.nombrePoints)), 2)  AS MoyenneCours,
+        equipe05.Cours.nomCours,
+        equipe05.Evaluation.moyenne,
+        equipe05.Session.codeSession,
+        equipe05.Utilisateur.nom,
+		equipe05.Utilisateur.prenom,
+		equipe05.Etudiant.matricule_PK,
+		equipe05.Etudiant.codePermanent,
+		equipe05.Cegep.nomCegep,
+		equipe05.Departement.nomDep,
+		equipe05.Cours.numeroCours,
+		equipe05.Cours.nomCours,
+		equipe05.Departement.numeroDep
+        
+FROM equipe05.Note
+	INNER JOIN equipe05.Evaluation ON equipe05.Evaluation.idEvaluation_PK = equipe05.Note.idEvaluation_FK
+    INNER JOIN equipe05.Groupe ON equipe05.Groupe.idGroupe_PK = equipe05.Evaluation.idGroupe_FK
+    INNER JOIN equipe05.Cours ON equipe05.Cours.idCours_PK = equipe05.Groupe.idCours_FK
+    INNER JOIN equipe05.Session ON equipe05.Session.idSession_PK = equipe05.Groupe.idSession_FK
+    INNER JOIN equipe05.Departement ON equipe05.Cours.idDepartement_FK = equipe05.Departement.idDepartement_PK 
+	INNER JOIN equipe05.Cegep ON equipe05.Departement.idCegep_FK = equipe05.Cegep.idCegep_PK 
+	INNER JOIN equipe05.Etudiant ON equipe05.Note.matricule_FK = equipe05.Etudiant.matricule_PK 
+	INNER JOIN equipe05.Utilisateur ON equipe05.Etudiant.idUtilisateur_FK = equipe05.Utilisateur.idUtilisateur_PK
+WHERE equipe05.Note.matricule_FK = $P{Matricule}
+GROUP BY equipe05.Evaluation.idGroupe_FK
+
+ORDER BY equipe05.Session.dateDebutSession ASC]]>
+	</queryString>
+	<field name="MoyenneCours" class="java.math.BigDecimal"/>
+	<field name="nomCours" class="java.lang.String"/>
+	<field name="moyenne" class="java.math.BigDecimal"/>
+	<field name="codeSession" class="java.lang.String"/>
+	<field name="nom" class="java.lang.String"/>
+	<field name="prenom" class="java.lang.String"/>
+	<field name="matricule_PK" class="java.lang.String"/>
+	<field name="codePermanent" class="java.lang.String"/>
+	<field name="nomCegep" class="java.lang.String"/>
+	<field name="nomDep" class="java.lang.String"/>
+	<field name="numeroCours" class="java.lang.Integer"/>
+	<field name="COLUMN_12" class="java.lang.String"/>
+	<field name="numeroDep" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="410" y="1" width="100" height="30" uuid="b71f39e5-1d2d-4537-a0c1-65251ade14f6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="18" width="571" height="1" backcolor="#000000" uuid="b2ea1b8e-740d-4a02-af47-cb47a8b64206"/>
+			</rectangle>
+			<textField pattern="HH:mm">
+				<reportElement x="510" y="1" width="40" height="30" uuid="1900bef6-dcc5-47d1-add7-4d77dd1dd059"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="1" width="100" height="30" uuid="f451df07-2440-4bb4-8e63-60b0cbf85cd9"/>
+				<textFieldExpression><![CDATA[$F{nomCegep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="26" width="100" height="19" uuid="89931901-b7af-439d-870d-463bbf6edc16"/>
+				<textElement textAlignment="Left">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="28" width="69" height="18" uuid="b9734e96-8921-4c25-9668-a5ef09109911"/>
+				<textElement>
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="45" width="60" height="14" uuid="c80e2e0c-5a61-4a8a-8cb9-19b1f6f7abeb"/>
+				<textElement>
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="1" width="230" height="19" uuid="53878b09-34b1-433d-8628-c954cbd34331"/>
+				<textElement>
+					<font fontName="Verdana" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Informations personnelles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="26" width="40" height="19" uuid="57483495-d84d-4da0-a9d1-72ea15449951"/>
+				<textElement>
+					<font fontName="Verdana" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="46" width="100" height="15" uuid="3dcf980a-4eee-4185-a976-4d0023d6a5d4"/>
+				<textElement textAlignment="Left">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="28" width="79" height="19" uuid="25ab89b3-e635-475c-b450-8c3713af5d85"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Matricule}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="47" width="190" height="15" uuid="9eaa1feb-80e1-481f-b6d4-be591f13e3b2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomDep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="428" y="17" width="66" height="18" uuid="a01fcdbe-2af5-46d6-b2db-0b74d4af18e4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Moyenne]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="17" width="58" height="18" uuid="3c1c5ff9-021d-45bf-a5c0-9a7949fb051e"/>
+				<textElement>
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Session]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="17" width="75" height="18" uuid="33e18c17-c38c-4442-b40c-0d5ff195d803"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Note finale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="16" width="100" height="19" uuid="d3d0184e-b3da-4af2-8136-dc704e926e95"/>
+				<textElement>
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titre du cours]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="347" y="0" width="75" height="14" uuid="767369d8-ec2a-4d06-991c-7d9213e69a15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MoyenneCours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="230" height="14" uuid="bb4f4c72-36c3-48fd-b962-4740b53f59f9"/>
+				<textElement textAlignment="Left">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomCours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="-1" width="66" height="14" uuid="2d39c4f3-0c19-4780-b274-cf2b68d38703"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{moyenne}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="58" height="14" uuid="c4159fd6-c412-4a83-b2a4-39dade4b972a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codeSession}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="0" width="60" height="14" uuid="761929ce-7449-4d94-a955-0924bb4553c4"/>
+				<textElement textAlignment="Left">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroDep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="28" height="14" uuid="09cf3c1f-7148-437d-8527-ddbbcba24ecc"/>
+				<textElement textAlignment="Left">
+					<font fontName="Verdana" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroCours}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="10" width="61" height="15" uuid="3a9c6ce7-5a9d-4ed2-833a-3114258fcc0c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

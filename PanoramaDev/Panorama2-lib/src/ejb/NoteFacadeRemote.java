@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ejb;
+
+import java.util.List;
+import javax.ejb.Remote;
+import pckEntites.Etudiant;
+import pckEntites.Groupe;
+import pckEntites.Note;
+
+/**
+ *
+ * @author clocal
+ */
+@Remote
+public interface NoteFacadeRemote {
+
+    void create(Note note);
+
+    void edit(Note note);
+
+    void remove(Note note);
+
+    Note find(Object id);
+
+    List<Note> findAll();
+
+    List<Note> findRange(int[] range);
+
+    int count();
+    
+    List<Note> getNoteByMatricule(Etudiant id, Groupe grp);
+}

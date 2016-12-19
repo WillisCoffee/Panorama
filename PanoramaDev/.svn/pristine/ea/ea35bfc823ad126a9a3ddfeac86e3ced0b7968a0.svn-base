@@ -1,0 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pckEntites;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author clocal
+ */
+@Entity
+@Table(name = "PlageHoraire")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "PlageHoraire.findAll", query = "SELECT p FROM PlageHoraire p"),
+    @NamedQuery(name = "PlageHoraire.findByIdHorairePK", query = "SELECT p FROM PlageHoraire p WHERE p.idHorairePK = :idHorairePK"),
+    @NamedQuery(name = "PlageHoraire.findByHeureDebut", query = "SELECT p FROM PlageHoraire p WHERE p.heureDebut = :heureDebut"),
+    @NamedQuery(name = "PlageHoraire.findByHeureFin", query = "SELECT p FROM PlageHoraire p WHERE p.heureFin = :heureFin"),
+    @NamedQuery(name = "PlageHoraire.findPlageParMatricule", query = "SELECT p FROM PlageHoraire p INNER JOIN Groupe g on g.idGroupe_PK = p.idGroupeFK"
+                                                       +" INNER JOIN ListeEtudiant l on l.idGroupeFK = g.idGroupe_PK WHERE l.matriculeFK = :matricule"),
+    @NamedQuery(name = "PlageHoraire.findByJour", query = "SELECT p FROM PlageHoraire p WHERE p.jour = :jour"),
+    @NamedQuery(name = "PlageHoraire.findByGroupe", query = "SELECT p FROM PlageHoraire p WHERE p.idGroupeFK = :groupe")})
+public class PlageHoraire implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idHoraire_PK")
+    private Integer idHorairePK;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "heureDebut")
+    @Temporal(TemporalType.TIME)
+    private Date heureDebut;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "heureFin")
+    @Temporal(TemporalType.TIME)
+    private Date heureFin;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 8)
+    @Column(name = "jour")
+    private String jour;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idHoraireFK")
+    private List<CoursAnnule> coursAnnuleList;
+    @JoinColumn(name = "idLocaux_FK", referencedColumnName = "idLocaux_PK")
+    @ManyToOne(optional = false)
+    private Locaux idLocauxFK;
+    @JoinColumn(name = "idGroupe_FK", referencedColumnName = "idGroupe_PK")
+    @ManyToOne(optional = false)
+    private Groupe idGroupeFK;
+    @JoinColumn(name = "idSession_FK", referencedColumnName = "idSession_PK")
+    @ManyToOne(optional = false)
+    private Session idSessionFK;
+
+    public PlageHoraire() {
+    }
+
+    public PlageHoraire(Integer idHorairePK) {
+        this.idHorairePK = idHorairePK;
+    }
+
+    public PlageHoraire(Integer idHorairePK, Date heureDebut, Date heureFin, String jour) {
+        this.idHorairePK = idHorairePK;
+        this.heureDebut = heureDebut;
+        this.heureFin = heureFin;
+        this.jour = jour;
+    }
+
+    public Integer getIdHorairePK() {
+        return idHorairePK;
+    }
+
+    public void setIdHorairePK(Integer idHorairePK) {
+        this.idHorairePK = idHorairePK;
+    }
+
+    public Date getHeureDebut() {
+        return heureDebut;
+    }
+
+    public void setHeureDebut(Date heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public Date getHeureFin() {
+        return heureFin;
+    }
+
+    public void setHeureFin(Date heureFin) {
+        this.heureFin = heureFin;
+    }
+
+    public String getJour() {
+        return jour;
+    }
+
+    public void setJour(String jour) {
+        this.jour = jour;
+    }
+
+    @XmlTransient
+    public List<CoursAnnule> getCoursAnnuleList() {
+        return coursAnnuleList;
+    }
+
+    public void setCoursAnnuleList(List<CoursAnnule> coursAnnuleList) {
+        this.coursAnnuleList = coursAnnuleList;
+    }
+
+    public Locaux getIdLocauxFK() {
+        return idLocauxFK;
+    }
+
+    public void setIdLocauxFK(Locaux idLocauxFK) {
+        this.idLocauxFK = idLocauxFK;
+    }
+
+    public Groupe getIdGroupeFK() {
+        return idGroupeFK;
+    }
+
+    public void setIdGroupeFK(Groupe idGroupeFK) {
+        this.idGroupeFK = idGroupeFK;
+    }
+
+    public Session getIdSessionFK() {
+        return idSessionFK;
+    }
+
+    public void setIdSessionFK(Session idSessionFK) {
+        this.idSessionFK = idSessionFK;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idHorairePK != null ? idHorairePK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PlageHoraire)) {
+            return false;
+        }
+        PlageHoraire other = (PlageHoraire) object;
+        if ((this.idHorairePK == null && other.idHorairePK != null) || (this.idHorairePK != null && !this.idHorairePK.equals(other.idHorairePK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        //return "pckEntites.PlageHoraire[ idHorairePK=" + idHorairePK + " ]";
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a");
+        return jour+" "+ format.format(heureDebut) +" "+ format.format(heureFin);
+    }
+    
+}

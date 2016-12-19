@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.4
+Created-By: 1.8.0_45-b14 (Oracle Corporation)
+X-COMMENT: Main-Class will be added automatically by build
+Class-Path: Panorama2-lib.jar lib/Panorama2-lib.jar beansbinding-1.2.1
+ .jar lib/beansbinding-1.2.1.jar com.lowagie.text-2.1.7.jar lib/com.lo
+ wagie.text-2.1.7.jar commons-beanutils-1.9.3-javadoc.jar lib/commons-
+ beanutils-1.9.3-javadoc.jar commons-beanutils-1.9.3-sources.jar lib/c
+ ommons-beanutils-1.9.3-sources.jar commons-beanutils-1.9.3-test-sourc
+ es.jar lib/commons-beanutils-1.9.3-test-sources.jar commons-beanutils
+ -1.9.3-tests.jar lib/commons-beanutils-1.9.3-tests.jar commons-beanut
+ ils-1.9.3.jar lib/commons-beanutils-1.9.3.jar commons-digester-1.6.ja
+ r lib/commons-digester-1.6.jar commons-digester.jar lib/commons-diges
+ ter.jar commons-logging-1.2-javadoc.jar lib/commons-logging-1.2-javad
+ oc.jar commons-logging-1.2.jar lib/commons-logging-1.2.jar jasperrepo
+ rts-6.3.0.jar lib/jasperreports-6.3.0.jar jasperreports-fonts-6.3.0.j
+ ar lib/jasperreports-fonts-6.3.0.jar jasperreports-javaflow-6.3.0.jar
+  lib/jasperreports-javaflow-6.3.0.jar org.apache.commons.collections.
+ jar lib/org.apache.commons.collections.jar mysql-connector-java-5.1.2
+ 3-bin.jar lib/mysql-connector-java-5.1.23-bin.jar 
+Main-Class: panorama.Main
+
