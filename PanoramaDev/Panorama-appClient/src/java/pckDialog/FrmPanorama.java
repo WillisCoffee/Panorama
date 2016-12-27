@@ -51,7 +51,6 @@ import static pckValidation.Validation.validerNom;
 import static pckValidation.Validation.validerNombre;
 import static pckValidation.Validation.validerNumDepartement;
 
-//TEST
 public class FrmPanorama extends javax.swing.JFrame 
 {
     // <editor-fold defaultstate="collapsed" desc="Variables">
@@ -1351,49 +1350,35 @@ public class FrmPanorama extends javax.swing.JFrame
         switch(selectedTab)
         {
             case    Etudiant:  Etudiant unEtudiant = new Etudiant();
-                               facadeUtilisateur = fournisseur.obtenirFacadeUtilisateur();
-                               facadeCodePostal = fournisseur.obtenirFacadeCodePostal();
                                DlgGererEtudiant dlgEtudiant = new DlgGererEtudiant(this, true, unEtudiant, facadeUtilisateur, facadeCodePostal);
                                dlgEtudiant.setLocationRelativeTo(this);
-                               dlgEtudiant.deseactiverChamps(true);
                                dlgEtudiant.setVisible(true);
                                if(dlgEtudiant.isResult())
                                {
-                                   facadeEtudiant = fournisseur.obtenirFacadeEtudiant();
                                    facadeEtudiant.create(dlgEtudiant.getUnEtudiant());
-                                   facadeAdresse = fournisseur.obtenirFacadeAdresse();
                                    facadeAdresse.create(dlgEtudiant.getAdresse());
                                }
                                chargerEtudiant();
                                break;
             case  Enseignant:  Professeur unProfesseur = new Professeur();
-                               facadeUtilisateur = fournisseur.obtenirFacadeUtilisateur();
-                               facadeCodePostal = fournisseur.obtenirFacadeCodePostal();
-                               facadeDepartement = fournisseur.obtenirFacadeDepartement();
                                DlgGererProfesseur dlgProfesseur = new DlgGererProfesseur(this, true, unProfesseur, lstDepartement, facadeUtilisateur, facadeCodePostal, facadeDepartement);
                                dlgProfesseur.setLocationRelativeTo(this);
                                dlgProfesseur.setVisible(true);
                                if(dlgProfesseur.isResult())
                                {
-                                   facadeAdresse = fournisseur.obtenirFacadeAdresse();
                                    facadeAdresse.create(dlgProfesseur.getAdresse());
-                                   facadeEnseignant = fournisseur.obtenirFacadeEnseignant();
                                    facadeEnseignant.create(dlgProfesseur.getProfesseur());
                                    
                                }
                                chargerEnseignant();
                                break;
             case   Personnel:  PersonnelSoutien unPersonnel = new PersonnelSoutien();
-                               facadeUtilisateur = fournisseur.obtenirFacadeUtilisateur();
-                               facadeCodePostal = fournisseur.obtenirFacadeCodePostal();
                                DlgGererPersonnel dlgPersonnel = new DlgGererPersonnel(this, true, unPersonnel, facadeUtilisateur, facadeCodePostal);
                                dlgPersonnel.setLocationRelativeTo(this);
                                dlgPersonnel.setVisible(true);
                                if(dlgPersonnel.isResult())
                                {
-                                   facadeAdresse = fournisseur.obtenirFacadeAdresse();
                                    facadeAdresse.create(dlgPersonnel.getAdresse());
-                                   facadePersonnel = fournisseur.obtenirFacadePersonnelSoutien();
                                    facadePersonnel.create(dlgPersonnel.getPesonnelSoutien());
                                }
                                chargerPersonnel();
@@ -1458,7 +1443,6 @@ public class FrmPanorama extends javax.swing.JFrame
                                facadeEtudiant = fournisseur.obtenirFacadeEtudiant();
                                DlgGererEtudiant dlgEtudiant = new DlgGererEtudiant(this, true, unEtudiant, facadeUtilisateur, facadeCodePostal);
                                dlgEtudiant.setLocationRelativeTo(this);
-                               dlgEtudiant.deseactiverChamps(false);
                                dlgEtudiant.setVisible(true);
                                if(dlgEtudiant.isResult())
                                {
